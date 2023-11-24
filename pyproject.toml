@@ -1,0 +1,133 @@
+[tool.poetry]
+name = "mlops-dl-project-example"
+version = "0.0.1"
+description = "Example package of a MLOps project with Deep Learning"
+authors = ["Roman Kryvokhyzha <kriwohizha@gmail.com>"]
+keywords = ["PyTorch", "onnx", "hydra", "PyTorch Lightning",  "ClearML", "Experiment Tracking"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10, <3.12"
+
+numpy = {version = "^1.23.5", optional = false}
+pandas = {version = "^2.0.0", optional = false}
+matplotlib = {version = ">=3.2, <=3.7.3", optional = false}
+seaborn = {version = "^0.13.0", optional = false}
+scikit-learn = {version = "^1.3.2", optional = false}
+rich = {version = "^13.7.0", optional = false}
+rootutils = {version = "^1.0.7", optional = false}
+torch = {version = "2.1.1", optional = false}
+torchvision = {version = "0.16.1", optional = false}
+lightning = {version = "^2.1.2", optional = false}
+torchmetrics = {version = "^1.2.0", optional = false}
+tensorboard = {version = "^2.15.1", optional = false}
+hydra-core = {version = "1.3.2", optional = false}
+hydra-colorlog = {version = "1.2.0", optional = false}
+clearml = {version = "^1.13.2", optional = false}
+
+[tool.poetry.extras]
+all = [
+    # basic deps
+    "numpy", "pandas", "matplotlib", "seaborn", "scikit-learn", "rich", "rootutils",
+    "torch", "torchvision", "lightning", "torchmetrics", "tensorboard",
+    "hydra-core", "hydra-colorlog", "clearml",
+]
+basic = [
+    # basic deps
+    "numpy", "pandas", "matplotlib", "seaborn", "scikit-learn", "rich", "rootutils",
+    "torch", "torchvision", "lightning", "torchmetrics", "tensorboard",
+    "hydra-core", "hydra-colorlog", "clearml",
+]
+
+[tool.poetry.dev-dependencies]
+pre-commit = "^3.4.0"
+
+[tool.black]
+line-length = 120
+preview = true
+exclude = '''
+/(
+    \.eggs         # exclude a few common directories in the
+  | \.git          # root of the project
+  | \.hg
+  | \.mypy_cache
+  | \.vscode
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | configs
+  | .gitlab
+  | dist
+)/
+'''
+
+[tool.ruff]
+# all rules can be found here: https://beta.ruff.rs/docs/rules/
+select = ["E", "F", "W", "I", "D"]
+
+# max line length for black
+line-length = 120
+
+ignore=[
+    # space before : (needed for how black formats slicing)
+    "E203",
+    # do not assign a lambda expression, use a def
+    "E731",
+    # do not use variables named 'l', 'O', or 'I'
+    "E741",
+    # unable to detect undefined names
+    "F403",
+    # imported but unused
+    "F401",
+    # missing docstring in public module
+    "D100",
+    # missing docstring in public class
+    "D101",
+    # missing docstring in public method
+    "D102",
+    # missing docstring in public function
+    "D103",
+    # missing docstring in public package
+    "D104",
+    # missing docstring in magic method
+    "D105",
+    # missing docstring in `__init__`
+    "D107",
+]
+
+exclude=[
+    ".git",
+    "__pycache__",
+    "dist",
+    ".gitlab",
+    "configs",
+    "build",
+]
+
+[tool.ruff.per-file-ignores]
+# It's fine not to put the import at the top of the file in the examples
+# folder.
+"scripts/*"=["E402"]
+"src/train.py"=["E402"]
+"src/infer.py"=["E402"]
+
+[tool.ruff.isort]
+# Use a single line after each import block.
+lines-after-imports = 2
+
+[tool.nbqa.config]
+black = "pyproject.toml"
+ruff = "pyproject.toml"
+
+[tool.nbqa.addopts]
+ruff = ["--extend-ignore=E402"]
+
+[tool.nbqa.mutate]
+black = 1
+ruff = 1
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

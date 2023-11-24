@@ -1,0 +1,11 @@
+_target_: src.data.my_dataset.MyDataModule
+read_csv_path: ${paths.data_dir}/sample.csv
+read_csv_kwargs:
+  sep: ";"
+val_size: 0.3
+batch_size: 16 # Needs to be divisible by the number of devices (e.g., if in a distributed setup)
+dataloader_num_workers: 2
+dataloader_pin_memory: false
+dataloader_persistent_workers: true
+target_col: target
+feature_cols: null
