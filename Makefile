@@ -29,3 +29,5 @@ generate_data: scripts/01-generate-data.py
 	python scripts/01-generate-data.py
 run_training: src/train.py
 	python src/train.py trainer=mps +trainer.gradient_clip_val=0.5
+run_train_experiment: src/train.py
+	python src/train.py logger=tensorboard experiment=experiment_1 ++trainer.gradient_clip_val=0.5
