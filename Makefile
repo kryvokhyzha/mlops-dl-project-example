@@ -1,7 +1,7 @@
 poetry_install_deps:
 	poetry install --no-root
 poetry_install_all_deps:
-	poetry install --no-root -E all
+	poetry install --no-root -E trition_example
 poetry_get_lock:
 	poetry lock
 poetry_update_deps:

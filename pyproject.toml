@@ -25,18 +25,14 @@ hydra-core = {version = "1.3.2", optional = false}
 hydra-colorlog = {version = "1.2.0", optional = false}
 clearml = {version = "^1.13.2", optional = false}
 
+transformers = {version = "4.35.0", optional = true}
+onnx = {version = "1.15.0", optional = true}
+onnxruntime = {version = "1.16.3", optional = true}
+tritonclient = {version = "2.40.0", optional = true, extras=["http"]}
+
 [tool.poetry.extras]
-all = [
-    # basic deps
-    "numpy", "pandas", "matplotlib", "seaborn", "scikit-learn", "rich", "rootutils",
-    "torch", "torchvision", "lightning", "torchmetrics", "tensorboard",
-    "hydra-core", "hydra-colorlog", "clearml",
-]
-basic = [
-    # basic deps
-    "numpy", "pandas", "matplotlib", "seaborn", "scikit-learn", "rich", "rootutils",
-    "torch", "torchvision", "lightning", "torchmetrics", "tensorboard",
-    "hydra-core", "hydra-colorlog", "clearml",
+trition_example = [
+    "transformers", "onnx", "onnxruntime", "tritonclient"
 ]
 
 [tool.poetry.dev-dependencies]
@@ -112,6 +108,8 @@ exclude=[
 "scripts/*"=["E402"]
 "src/train.py"=["E402"]
 "src/infer.py"=["E402"]
+"docs/nvidia-triton/01-huggingface-transformer/client.py"=["F821"]
+"docs/nvidia-triton/01-huggingface-transformer/model_repository/python-tokenizer/*"=["F821"]
 
 [tool.ruff.isort]
 # Use a single line after each import block.

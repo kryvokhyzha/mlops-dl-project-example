@@ -144,15 +144,19 @@ dmypy.json
 # custom
 data
 !*/data
-models
-!*/models
+trash/
 logs
 
 # configs
 docs/clearml/configs/*.conf
 !docs/clearml/configs/*.temp.conf
 
+# temp
+TODO
 temp*.py
 
-TODO
-trash/
+# models
+*.onnx
+
+# tokenizers
+docs/nvidia-triton/01-huggingface-transformer/assets/bert-base-uncased-tokenizer
