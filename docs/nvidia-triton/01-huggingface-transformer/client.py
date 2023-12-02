@@ -10,14 +10,14 @@ from tritonclient.utils import np_to_triton_dtype
 
 @lru_cache
 def get_client() -> InferenceServerClient:
-    return InferenceServerClient(url="0.0.0.0:8500", verbose=True)
+    return InferenceServerClient(url="0.0.0.0:8500")
 
 
 def call_triton_embedder_ensemble(text: str) -> np.ndarray:
     triton_client = get_client()
-    text = np.asarray([text.encode("utf-8")], dtype=np.object)
+    text = np.asarray([text.encode("utf-8")], dtype=object)
 
-    input_text = InferInput("TEXTS", shape=text.shape, datatype=np_to_triton_dtype(text.dtype))
+    input_text = InferInput("TEXTS", shape=list(text.shape), datatype=np_to_triton_dtype(text.dtype))
     input_text.set_data_from_numpy(text, binary_data=True)
 
     infer_output = InferRequestedOutput("EMBEDDINGS", binary_data=True)
@@ -34,9 +34,9 @@ def call_triton_embedder_ensemble(text: str) -> np.ndarray:
 
 def call_triton_tokenizer(text: str) -> Tuple[np.ndarray, np.ndarray]:
     triton_client = get_client()
-    text = np.asarray([text.encode("utf-8")], dtype=np.object)
+    text = np.asarray([text.encode("utf-8")], dtype=object)
 
-    input_text = InferInput("TEXTS", shape=text.shape, datatype=np_to_triton_dtype(text.dtype))
+    input_text = InferInput("TEXTS", shape=list(text.shape), datatype=np_to_triton_dtype(text.dtype))
     input_text.set_data_from_numpy(text, binary_data=True)
 
     query_response = triton_client.infer(

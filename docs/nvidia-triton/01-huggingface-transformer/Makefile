@@ -1,3 +1,5 @@
+run_triton_server:
+	docker-compose up --build
 run_export_script: export_model.py
 	python export_model.py
 run_tensorrt:

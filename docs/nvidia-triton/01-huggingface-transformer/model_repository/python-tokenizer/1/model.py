@@ -11,7 +11,7 @@ class TritonPythonModel:
         )
 
     def tokenize(self, texts):
-        encoded = self.tokenizer(texts, padding="max_length", max_length=16, truncation=True)
+        encoded = self.tokenizer(texts, padding="max_length", max_length=16, truncation=True, return_tensors=None)
         input_ids = np.asarray(encoded["input_ids"], dtype=np.int64)
         attention_mask = np.asarray(encoded["attention_mask"], dtype=np.int64)
 
@@ -20,7 +20,7 @@ class TritonPythonModel:
     def execute(self, requests):
         responses = []
         for request in requests:
-            texts = pd_utils.get_input_tensor_by_name(request, "TEXTS").as_numpy()
+            texts = pb_utils.get_input_tensor_by_name(request, "TEXTS").as_numpy()
             texts = [text.decode() for text in texts]
 
             input_ids, attention_mask = self.tokenize(texts)

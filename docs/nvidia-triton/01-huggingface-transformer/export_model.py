@@ -50,7 +50,7 @@ def main():
     model_version_path = model_repository_path / f"{model_version}"
     model_version_path.mkdir(parents=True, exist_ok=True)
 
-    model = TextHeadWithProj(model_name, output_proj_dim)
+    model = TextHeadWithProj(model_name, output_proj_dim).cpu()
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     tokenizer.save_pretrained("assets/bert-base-uncased-tokenizer")
     model.eval()
